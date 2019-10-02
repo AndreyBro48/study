@@ -6,6 +6,10 @@ public class Task {
     private Integer id;
     private String definition;
 
+    public Task(String definition) {
+        this.definition = definition;
+    }
+
     public Task(Integer id, String definition) {
         this.id = id;
         this.definition = definition;
