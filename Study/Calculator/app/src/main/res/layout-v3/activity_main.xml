@@ -28,9 +28,10 @@
                     android:layout_height="wrap_content"
                     android:scrollHorizontally="true"
                     android:textSize="40sp"
-                    android:text="10001 + 10002"
+                    android:text="10001 + 10001"
                     android:focusable="false"
-                    android:cursorVisible="true"/>
+                    android:cursorVisible="true"
+                    android:id="@+id/idNumberField"/>
         </HorizontalScrollView>
         <TextView
                 android:layout_marginRight="8dp"
@@ -51,12 +52,15 @@
                 <Button android:layout_width="100dp"
                         android:layout_height="70dp"
                         android:text="1"
-                        android:onClick="clickBtn"
-                        android:textSize="30sp"/>
+                        android:onClick="onNumberClick"
+                        android:textSize="30sp"
+                        android:id="@+id/btnNum1"/>
                 <Button android:layout_width="100dp"
                         android:layout_height="70dp"
                         android:text="0"
-                        android:textSize="30sp"/>
+                        android:onClick="onNumberClick"
+                        android:textSize="30sp"
+                        android:id="@+id/btnNum0"/>
                 <Button android:layout_width="100dp"
                         android:layout_height="70dp"
                         android:text="DEL"
@@ -102,13 +106,17 @@
                     android:orientation="horizontal">
                 <Button android:layout_width="100dp"
                         android:layout_height="70dp"
-                        android:text="<-"
+                        android:text="XOR"
                         android:textSize="30sp"/>
                 <Button android:layout_width="100dp"
                         android:layout_height="70dp"
-                        android:text="->"
+                        android:text="INV"
                         android:textSize="30sp"/>
-
+                <Button android:layout_width="100dp"
+                        android:onClick="onSolve"
+                        android:layout_height="70dp"
+                        android:text="\="
+                        android:textSize="30sp"/>
             </LinearLayout>
         </LinearLayout>
 
