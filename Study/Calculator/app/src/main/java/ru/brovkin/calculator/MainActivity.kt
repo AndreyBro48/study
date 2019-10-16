@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             {
                 numberField.text =
                     numberField.text.substring(0, numberField.text.indexOf(' '));
-            } 
+            }
             numberField.append(txtButton)
         } else if (txtButton == "<<"){
 
