@@ -72,15 +72,15 @@
                     android:orientation="horizontal">
                 <Button android:layout_width="100dp"
                         android:layout_height="70dp"
-                        android:text="+"
+                        android:text=" + "
                         android:textSize="30sp"/>
                 <Button android:layout_width="100dp"
                         android:layout_height="70dp"
-                        android:text="-"
+                        android:text=" - "
                         android:textSize="30sp"/>
                 <Button android:layout_width="100dp"
                         android:layout_height="70dp"
-                        android:text="AND"
+                        android:text=" AND "
                         android:textSize="30sp"/>
             </LinearLayout>
             <LinearLayout
@@ -89,7 +89,7 @@
                     android:orientation="horizontal">
                 <Button android:layout_width="100dp"
                         android:layout_height="70dp"
-                        android:text="XOR"
+                        android:text=" XOR "
                         android:textSize="30sp"/>
                 <Button android:layout_width="100dp"
                         android:layout_height="70dp"
@@ -106,11 +106,11 @@
                     android:orientation="horizontal">
                 <Button android:layout_width="100dp"
                         android:layout_height="70dp"
-                        android:text="XOR"
+                        android:text="\<\<"
                         android:textSize="30sp"/>
                 <Button android:layout_width="100dp"
                         android:layout_height="70dp"
-                        android:text="INV"
+                        android:text="\>\>"
                         android:textSize="30sp"/>
                 <Button android:layout_width="100dp"
                         android:onClick="onSolve"

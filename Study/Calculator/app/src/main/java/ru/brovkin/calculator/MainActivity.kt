@@ -13,6 +13,8 @@ import android.widget.TextView
 class MainActivity : AppCompatActivity() {
 
     lateinit var numberField : TextView
+    val operationWithTwoOperands: Array<String> = arrayOf(" + ", " - ", " AND ", " OR ", " XOR ")
+    val operationWithOneOperand: Array<String> = arrayOf("INV", "<<", ">>");
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,33 +26,48 @@ class MainActivity : AppCompatActivity() {
         val button = view as Button
         var txtButton : String = button.text as String
 
-        if (txtButton == "1" || txtButton == "0"){
+        if (txtButton == "1" || txtButton == "0") {
             numberField.append(txtButton)
+        } else if (operationWithTwoOperands.contains(txtButton)) {
+            if (numberField.text.last() == ' ')
+            {
+                numberField.text =
+                    numberField.text.substring(0, numberField.text.indexOf(' '));
+            } 
+            numberField.append(txtButton)
+        } else if (txtButton == "<<"){
+
         }
 
     }
 
     fun onSolve(view: View) {
-        solve()
+        val solveCurExpression = solve()
+
+
     }
 
-    fun solve(){
+    fun solve(): String {
         val txt = numberField.text
-        val vars = txt.split(" + "," - ")
-        if (vars.count()==2)
+        val vars = txt.split(" ");
+        if (vars.count()==3)
         {
-            val num1 = vars[0].toInt(2);
-            val num2 = vars[1].toInt(2);
-            if (txt.contains('+'))
-            {
-                numberField.text = (num1+num2).toString(2);
-            }
-            else
-            {
-                numberField.text = (num1-num2).toString(2);
+            val num1 = vars[0].toInt(2)
+            val num2 = vars[2].toInt(2)
+            if (txt.contains('+')){
+                return (num1+num2).toString(2)
+            } else if (txt.contains('-')){
+                return (num1-num2).toString(2)
+            } else if (txt.contains("XOR")){
+                return num1.xor(num2).toString(2)
+            } else if (txt.contains("AND")){
+                return num1.and(num2).toString(2)
+            } else if (txt.contains("OR")){
+                return num1.or(num2).toString(2)
             }
         }
-
+        return txt as String
     }
 }
+
 
