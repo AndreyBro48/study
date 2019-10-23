@@ -5,9 +5,12 @@ import android.os.Bundle
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.os.PersistableBundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,36 +25,74 @@ class MainActivity : AppCompatActivity() {
         numberField = this.findViewById(R.id.idNumberField)
     }
 
-    fun onNumberClick(view: View) {
-        val button = view as Button
-        var txtButton : String = button.text as String
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("numberField",numberField.text.toString())
+        outState.putString("txtAnswer", txtAnswer.text.toString())
+    }
 
-        if (txtButton == "1" || txtButton == "0") {
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        numberField.text = savedInstanceState["numberField"] as String
+        txtAnswer.text = savedInstanceState["txtAnswer"] as String
+    }
+    fun onNumberAndOperationClick(view: View) {
+        val button = view as Button
+        val txtButton : String = button.text.toString()
+
+        if (txtButton == "DEL"){
+            if (numberField.text.last() == ' ') {
+                numberField.text =
+                    numberField.text.substring(0, numberField.text.indexOf(' '))
+            } else if (numberField.text.count() > 1) {
+                numberField.text = numberField.text.substring(0, numberField.text.length - 1)
+            } else{
+                numberField.text = ""
+            }
+        } else if (txtButton == "1" || txtButton == "0") {
+            if (numberField.text == "0")
+                numberField.text = ""
             numberField.append(txtButton)
-        } else if (operationWithTwoOperands.contains(txtButton)) {
+        } else {
             if (numberField.text.last() == ' ')
             {
                 numberField.text =
-                    numberField.text.substring(0, numberField.text.indexOf(' '));
+                    numberField.text.substring(0, numberField.text.indexOf(' '))
+            } else if (numberField.text.split(" ").count() == 3){
+                numberField.text = solve()
             }
-            numberField.append(txtButton)
-        } else if (txtButton == "<<"){
 
+            if (operationWithTwoOperands.contains(txtButton)) {
+                numberField.append(txtButton)
+            } else {
+                numberField.text = solve()
+                val txt = numberField.text.toString()
+                if (txtButton == "<<"){
+                    numberField.text = txt.toInt(2).shl(1).toString(2)
+                } else if (txtButton == ">>"){
+                    numberField.text = txt.toInt(2).shr(1).toString(2)
+                } else if (txtButton == "INV"){
+                    var num = txt.toUInt(2).inv().toString(2)
+                    numberField.text = num.substring(num.length-txt.length).toInt(2).toString(2)
+                }
+            }
         }
 
+        txtAnswer.text = solve()
     }
 
     fun onSolve(view: View) {
-        val solveCurExpression = solve()
-
-
+        numberField.text = solve()
     }
 
     fun solve(): String {
-        val txt = numberField.text
-        val vars = txt.split(" ");
+        val txt = numberField.text.toString()
+        val vars = txt.split(" ")
         if (vars.count()==3)
         {
+            if (vars[2] == ""){
+                return vars[0]
+            }
             val num1 = vars[0].toInt(2)
             val num2 = vars[2].toInt(2)
             if (txt.contains('+')){
@@ -66,7 +107,7 @@ class MainActivity : AppCompatActivity() {
                 return num1.or(num2).toString(2)
             }
         }
-        return txt as String
+        return txt
     }
 }
 
